@@ -5,17 +5,11 @@
         internal static int Dijkstra(Graph graph, Node target)
         {
             var next = new PriorityQueue<Node, int>();
-            var first = graph.Chitons?.FirstOrDefault();
-            if(first == null)
-            {
-                return 0;
-            }
-            first.Distance = 0;
-            next.Enqueue(first, 0);
+            graph.Chitons[(0, 0)].Distance = 0;
+            next.Enqueue(graph.Chitons[(0, 0)], 0);
 
             while (next.Count > 0)
             {
-                Console.WriteLine(next.Count);
                 var current = next.Dequeue();
                 if (current.Visited)
                 {
@@ -26,7 +20,6 @@
 
                 if (current == target)
                 {
-                    Console.WriteLine($"target, {target.Distance}");
                     return target.Distance;
                 }
 
@@ -44,7 +37,6 @@
                     }
                 }
             }
-            Console.WriteLine($"target, {target.Distance}");
 
             return target.Distance;
         }

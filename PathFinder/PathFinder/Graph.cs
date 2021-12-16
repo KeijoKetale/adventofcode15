@@ -1,20 +1,18 @@
-﻿using System.Collections.Generic;
-
-namespace PathFinder
+﻿namespace PathFinder
 {
     internal class Graph
     {
-        public IEnumerable<Node>? Chitons { get; set; }
+        public Dictionary<(int, int), Node>? Chitons { get; set; }
         static readonly (int, int)[] adjacent = new[] { (-1, 0), (1, 0), (0, -1), (0, 1) };
 
         internal IEnumerable<Node> GetNeighbors(Node current)
         {
             foreach ((int i, int j) in adjacent)
             {
-                var found = Chitons?.FirstOrDefault(x => x.X == current.X + i && x.Y == current.Y + j);
-                if (found != null && !found.Visited)
+                var key = (current.X + i, current.Y + j);
+                if (Chitons.ContainsKey(key) && !Chitons[key].Visited)
                 {
-                    yield return found;
+                    yield return Chitons[key];
                 }
             }
         }
